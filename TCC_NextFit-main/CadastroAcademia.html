@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Academia - NextFit</title>
+  <link rel="stylesheet" href="css/CadastroAcademia.css" />
+</head>
+<body>
+  <main id="form_container">
+    <div id="form_header">
+      <h1>NextFit</h1>
+      <h2>Cadastro de Academia</h2>
+    </div>
+
+    <form id="academiaForm">
+      <a href="Inicio.html" class="btn-voltar">← Inicio</a>
+
+      <input type="text" id="nomeAcademia" placeholder="Nome da Academia" required />
+      <input type="email" id="emailAcademia" placeholder="Email da Academia" required /> <input type="text" id="cidade" placeholder="Cidade" required />
+      <input type="text" id="bairro" placeholder="Bairro" required />
+      <input type="text" id="rua" placeholder="Rua" required />
+      <input type="text" id="cep" placeholder="CEP (apenas números)" maxlength="8" pattern="\d{8}" title="Apenas 8 números" required />
+      <input type="text" id="numero" placeholder="Número" required />
+      <input type="tel" id="telefone" placeholder="Telefone da academia (apenas números, com DDD)" pattern="\d{10,11}" title="Telefone com DDD (apenas números, 10 ou 11 dígitos)" required />
+      <input type="text" id="horario" placeholder="Horário de atendimento (ex: 08:00 - 22:00)" required />
+      <input type="password" id="senhaAcademia" placeholder="Senha" required />
+      <input type="password" id="confirmaSenhaAcademia" placeholder="Confirmar Senha" required />
+
+      <div id="mensagem" class="mensagem"></div>
+
+      <button type="submit">Cadastrar Academia</button>
+    </form>
+
+    <p class="switch-link">
+      Já tem uma academia? <a href="Login.html">Entrar</a> | Não é academia? <a href="CadastroAluno.html">Cadastrar Aluno</a>
+    </p>
+  </main>
+
+  <script src="js/CadastroAcademia.js"></script>
+</body>
+</html>

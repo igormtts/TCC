@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #000;
+    color: white;
+    padding: 2rem;
+  }
+  
+  #form_container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #111;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px solid red;
+  }
+  
+  #form_header h1 {
+    color: #ff1e1e; /* Cor do logo */
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  #form_header h2 {
+    color: white;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  input, select, button {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  input, select {
+    background: #222;
+    color: white;
+  }
+
+  /* Placeholder color */
+  input::placeholder {
+    color: #aaa;
+  }
+
+  select option {
+    background-color: #222;
+    color: white;
+  }
+
+  button {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #cc0000;
+  }
+
+  .btn-voltar {
+    display: inline-block;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    color: white;
+    background-color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+  
+  .btn-voltar:hover {
+    background-color: #555;
+  }
+  
+  .mensagem {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .mensagem.sucesso {
+    color: #00ff88;
+  }
+  
+  .mensagem.erro {
+    color: #ff4444;
+  }
+  
+  .switch-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9em;
+  }
+
+  .switch-link a {
+    color: #ff1e1e;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .switch-link a:hover {
+    text-decoration: underline;
+  }
