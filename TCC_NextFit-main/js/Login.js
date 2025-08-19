@@ -40,41 +40,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await response.json(); // Tenta parsear a resposta JSON
 
-            if (response.ok) { // Se a resposta for um status 2xx (sucesso)
+            // No seu arquivo js/Login.js
+            // Dentro da função do listener para o formulário
+            // Após a linha 'const data = await response.json();'
+
+            // No seu arquivo js/Login.js
+            // Dentro da função do listener para o formulário
+            // Após a linha 'const data = await response.json();'
+
+            if (response.ok) {
+                // Adicione esta verificação para garantir que o tipo de usuário é salvo
+                const tipo = tipoLogin.value;
+                let usuarioDados = {};
+
+                if (tipo === "aluno") {
+                    usuarioDados = { ...data.aluno, tipo: 'aluno' };
+                } else if (tipo === "academia") {
+                    usuarioDados = { ...data.academia, tipo: 'academia' };
+                }
+
+                localStorage.setItem("usuarioLogado", JSON.stringify(usuarioDados));
+
                 mensagem.textContent = data.message;
                 mensagem.classList.add("sucesso");
 
-                // Armazena informações do usuário logado no localStorage
-                // Adapte os campos conforme o que seu backend retorna
-                if (tipo === "aluno") {
-                    localStorage.setItem("usuarioLogado", JSON.stringify({
-                        tipo: "aluno",
-                        id: data.aluno.id,
-                        nome: data.aluno.nome,
-                        sobrenome: data.aluno.sobrenome,
-                        email: data.aluno.email
-                    }));
-                } else if (tipo === "academia") {
-                    localStorage.setItem("usuarioLogado", JSON.stringify({
-                        tipo: "academia",
-                        id: data.academia.id,
-                        nome: data.academia.nome,
-                        cidade: data.academia.cidade, // Adapte conforme o retorno do backend
-                        telefone: data.academia.telefone // Adapte conforme o retorno do backend
-                    }));
-                }
+                setTimeout(() => {
+                    // Redireciona para a página inicial, que agora será dinâmica
+                    window.location.href = "Inicio.html";
+                }, 1500);
 
-                setTimeout(() => window.location.href = "Inicio.html", 1500); // Redireciona após sucesso
-
-            } else { // Se a resposta for um status de erro (4xx, 5xx)
-                mensagem.textContent = data.message || "Erro no login.";
-                mensagem.classList.add("erro");
+            } else {
             }
-
-        } catch (error) {
-            console.error("Erro na requisição de login:", error);
-            mensagem.textContent = "Não foi possível conectar ao servidor. Tente novamente.";
+          
+        { 
+            mensagem.textContent = data.message || "Erro no login.";
             mensagem.classList.add("erro");
         }
-    });
+
+    } catch (error) {
+        console.error("Erro na requisição de login:", error);
+        mensagem.textContent = "Não foi possível conectar ao servidor. Tente novamente.";
+        mensagem.classList.add("erro");
+    }
+});
 });

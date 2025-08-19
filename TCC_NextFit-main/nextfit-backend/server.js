@@ -163,8 +163,6 @@ app.get('/academias', async (req, res) => {
     }
 });
 
-// --- ROTAS DE LOGIN (Mova estas para AQUI, antes do app.listen) ---
-
 // Rota de Login de Aluno
 app.post('/login/aluno', async (req, res) => {
     let connection;
@@ -213,6 +211,13 @@ app.post('/login/aluno', async (req, res) => {
 
 // Rota de Login de Academia
 app.post('/login/academia', async (req, res) => {
+    const { nome, senha } = req.body;
+    const nomeLimpo = nome.trim();
+
+    const [academias] = await connection.execute(
+        'SELECT ... FROM Academias WHERE nome = ?',
+        [nomeLimpo]
+    );
     let connection;
     try {
         connection = await getConnection();
