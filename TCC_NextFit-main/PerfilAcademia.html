@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil da Academia - NextFit</title>
     <link rel="stylesheet" href="css/perfilAcademia.css">
 </head>
+
 <body>
     <header class="header">
         <h1 class="logo">NextFit</h1>
@@ -16,17 +18,36 @@
     </header>
 
     <main class="perfil-container">
-        <div id="dadosAcademia" class="info-card">
-            <h2>Dados da Academia</h2>
-            <div id="detalhesAcademia">
-                <p><strong>Carregando...</strong></p>
+        <div id="gerenciamentoModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h3>Gerenciar Mensalidade</h3>
+                <p>Aluno: <strong id="alunoNomeModal"></strong></p>
+                <label for="novaDataVencimento">Nova Data de Vencimento:</label>
+                <input type="date" id="novaDataVencimento">
+                <button id="btnSalvarData">Salvar</button>
             </div>
         </div>
+        <div id="enviarNotificacao" class="enviar-notificacao-card">
+    <h2>Enviar Notificação</h2>
+    <form id="notificacaoForm">
+        <input type="text" id="tituloNotificacao" placeholder="Título da Notificação" required>
+        <textarea id="conteudoNotificacao" placeholder="Conteúdo da notificação..." required></textarea>
+        <div class="opcoes-notificacao">
+            <label for="tipoNotificacao">Destinatário:</label>
+            <select id="tipoNotificacao">
+                <option value="geral">Todos os Alunos</option>
+                </select>
+        </div>
+        <button type="submit">Enviar</button>
+    </form>
+    <p id="mensagemNotificacao" class="mensagem"></p>
+</div>
 
         <div id="alunosContainer" class="alunos-card">
             <h2>Meus Alunos</h2>
             <ul id="listaAlunos">
-                </ul>
+            </ul>
         </div>
     </main>
 
@@ -36,4 +57,5 @@
 
     <script src="js/perfilAcademia.js"></script>
 </body>
+
 </html>

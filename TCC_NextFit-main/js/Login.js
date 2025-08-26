@@ -4,13 +4,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("loginForm");
     const mensagem = document.getElementById("mensagem");
 
-    loginForm.addEventListener("submit", async (e) => { // Adicionado 'async' aqui
+    loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+        
         const tipo = tipoLogin.value;
-        const emailOuNome = document.getElementById("emailOuNome").value.trim(); // Corrigido o ID aqui
+        const emailOuNome = document.getElementById("emailOuNome").value.trim();
         const senha = document.getElementById("senhaLogin").value.trim();
-        mensagem.className = "mensagem"; // Limpa classes de mensagem anteriores
-        mensagem.textContent = ""; // Limpa texto de mensagem anterior
+
+        mensagem.className = "mensagem";
+        mensagem.textContent = "";
 
         if (!emailOuNome || !senha) {
             mensagem.textContent = "Preencha todos os campos.";
@@ -23,11 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
             let bodyData = {};
 
             if (tipo === "aluno") {
-                url = 'http://localhost:3000/login/aluno'; // URL para login de aluno
-                bodyData = { email: emailOuNome, senha: senha }; // Backend espera 'email' e 'senha'
+                url = 'http://localhost:3000/login/aluno';
+                bodyData = { email: emailOuNome, senha: senha };
             } else if (tipo === "academia") {
                 url = 'http://localhost:3000/login/academia';
-                bodyData = { nome: emailOuNome, senha: senha }; // Backend espera 'nome' e 'senha'
+                bodyData = { nome: emailOuNome, senha: senha };
             }
 
             const response = await fetch(url, {
@@ -38,49 +40,50 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(bodyData)
             });
 
-            const data = await response.json(); // Tenta parsear a resposta JSON
-
-            // No seu arquivo js/Login.js
-            // Dentro da função do listener para o formulário
-            // Após a linha 'const data = await response.json();'
-
-            // No seu arquivo js/Login.js
-            // Dentro da função do listener para o formulário
-            // Após a linha 'const data = await response.json();'
+            const data = await response.json();
 
             if (response.ok) {
-                // Adicione esta verificação para garantir que o tipo de usuário é salvo
-                const tipo = tipoLogin.value;
-                let usuarioDados = {};
-
+                let usuarioLogado;
                 if (tipo === "aluno") {
-                    usuarioDados = { ...data.aluno, tipo: 'aluno' };
+                    usuarioLogado = {
+                        tipo: "aluno",
+                        id: data.aluno.id,
+                        nome: data.aluno.nome,
+                        sobrenome: data.aluno.sobrenome,
+                        email: data.aluno.email
+                    };
                 } else if (tipo === "academia") {
-                    usuarioDados = { ...data.academia, tipo: 'academia' };
+                    usuarioLogado = {
+                        tipo: "academia",
+                        id: data.academia.id,
+                        nome: data.academia.nome,
+                        email: data.academia.email
+                    };
                 }
 
-                localStorage.setItem("usuarioLogado", JSON.stringify(usuarioDados));
-
-                mensagem.textContent = data.message;
-                mensagem.classList.add("sucesso");
-
-                setTimeout(() => {
-                    // Redireciona para a página inicial, que agora será dinâmica
-                    window.location.href = "Inicio.html";
-                }, 1500);
+                if (usuarioLogado) {
+                    localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
+                    
+                    mensagem.textContent = data.message;
+                    mensagem.classList.add("sucesso");
+                    
+                    setTimeout(() => {
+                        window.location.href = "Inicio.html";
+                    }, 1000);
+                } else {
+                    mensagem.textContent = "Erro ao processar dados de usuário.";
+                    mensagem.classList.add("erro");
+                }
 
             } else {
+                mensagem.textContent = data.message || "Erro no login. Verifique suas credenciais.";
+                mensagem.classList.add("erro");
             }
-          
-        { 
-            mensagem.textContent = data.message || "Erro no login.";
+
+        } catch (error) {
+            console.error("Erro na requisição de login:", error);
+            mensagem.textContent = "Não foi possível conectar ao servidor. Tente novamente.";
             mensagem.classList.add("erro");
         }
-
-    } catch (error) {
-        console.error("Erro na requisição de login:", error);
-        mensagem.textContent = "Não foi possível conectar ao servidor. Tente novamente.";
-        mensagem.classList.add("erro");
-    }
-});
+    });
 });

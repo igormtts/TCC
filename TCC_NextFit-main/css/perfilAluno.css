@@ -1,0 +1,101 @@
+/* perfilAluno.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+}
+
+.header {
+    background-color: #1a1a1a;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ff0000;
+}
+
+.logo {
+    color: #ff0000;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.nav {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.nav-btn {
+    background-color: #ff1e1e;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: #d11414;
+}
+
+.logout-btn {
+    background-color: #333;
+    color: white;
+}
+
+.logout-btn:hover {
+    background-color: #555;
+}
+
+.perfil-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.info-card, .mensalidade-card {
+    background-color: #1c1c1c;
+    border: 2px solid #ff1e1e;
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+h2 {
+    color: #ff1e1e;
+    margin-bottom: 1rem;
+}
+
+.info-card p, .mensalidade-card p {
+    margin: 0.5rem 0;
+}
+
+.btn-pagar {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-pagar:hover {
+    background-color: #45a049;
+}
+
+.footer {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #ff0000;
+    font-size: 0.9em;
+    margin-top: 2rem;
+}
