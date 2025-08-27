@@ -56,11 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
         "Vidreira", "Vitor Meireles", "Witmarsum", "Xanxerê", "Xavantina", "Xaxim", "Zortéa"
     ];
 
-    academiaForm.addEventListener("submit", async (event) => {
-        event.preventDefault(); // Impede o envio padrão do formulário
+    // ... código anterior
 
-        mensagem.innerText = ""; // Limpa mensagens anteriores
-        mensagem.classList.remove("sucesso", "erro");
+    academiaForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
         const nome = document.getElementById("nomeAcademia").value.trim();
         const email = document.getElementById("emailAcademia").value.trim();
@@ -74,30 +73,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const senha = document.getElementById("senhaAcademia").value.trim();
         const confirmaSenha = document.getElementById("confirmaSenhaAcademia").value.trim();
 
-        // Validações básicas
-        if (!nome || !email || !cidade || !bairro || !rua || !cep || !numero || !telefone || !horario || !senha || !confirmaSenha) {
-            mensagem.innerText = "Por favor, preencha todos os campos.";
-            mensagem.classList.add("erro");
-            return;
-        }
-
-        // --- NOVA VALIDAÇÃO ADICIONADA AQUI ---
-        if (senha.length < 6) {
-            mensagem.innerText = "A senha deve ter no mínimo 6 caracteres.";
-            mensagem.classList.add("erro");
-            return;
-        }
-        // --- FIM DA NOVA VALIDAÇÃO ---
-
+        // Adicione a validação de senha e de cidade que estava no código original
         if (senha !== confirmaSenha) {
             mensagem.innerText = "As senhas não coincidem.";
             mensagem.classList.add("erro");
             return;
         }
 
-        // Validação de cidade (mantida)
-        if (!cidadesSC.includes(cidade)) {
-            mensagem.innerText = "A cidade informada não é válida para Santa Catarina.";
+        // Converte a cidade para a primeira letra maiúscula e o restante minúscula para a validação
+        const cidadeValidada = cidade.charAt(0).toUpperCase() + cidade.slice(1).toLowerCase();
+        if (!cidadesSC.includes(cidadeValidada)) {
+            mensagem.innerText = "O cadastro é permitido apenas para academias de Santa Catarina.";
             mensagem.classList.add("erro");
             return;
         }
@@ -125,23 +111,26 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (response.ok) {
+                // **CORREÇÃO:** Exibe a mensagem de sucesso diretamente no elemento 'mensagem'
                 mensagem.innerText = data.message;
+                mensagem.classList.remove("erro");
                 mensagem.classList.add("sucesso");
-                academiaForm.reset(); // Limpa o formulário
-
-                // Opcional: Redirecionar após sucesso, se desejar
-                setTimeout(() => {
-                    window.location.href = "Login.html"; // Redireciona para a página inicial
-                }, 1500);
+                academiaForm.reset();
+                // Limpe o formulário para evitar que a próxima tentativa use dados antigos
+                academiaForm.reset();
 
             } else {
+                // **CORREÇÃO:** Exibe a mensagem de erro diretamente no elemento 'mensagem'
                 mensagem.innerText = data.message || "Erro ao cadastrar academia.";
+                mensagem.classList.remove("sucesso");
                 mensagem.classList.add("erro");
             }
         } catch (error) {
             console.error('Erro de rede ou servidor:', error);
+            // **CORREÇÃO:** Exibe a mensagem de erro diretamente no elemento 'mensagem'
             mensagem.innerText = "Erro ao conectar com o servidor. Tente novamente mais tarde.";
+            mensagem.classList.remove("sucesso");
             mensagem.classList.add("erro");
         }
+        });
     });
-});

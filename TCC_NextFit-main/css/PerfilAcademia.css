@@ -151,11 +151,14 @@ body {
 }
 
 .mensagem.sucesso {
-    color: #28a745; /* Verde */
+    color: #28a745; 
     margin-top: 1rem;
 }
 
 .mensagem.erro {
-    color: #dc3545; /* Vermelho */
+    color: #dc3545; 
     margin-top: 1rem;
+}
+.modal.escondido {
+    display: none;
 }

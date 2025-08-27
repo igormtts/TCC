@@ -11,8 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const emailOuNome = document.getElementById("emailOuNome").value.trim();
         const senha = document.getElementById("senhaLogin").value.trim();
 
-        mensagem.className = "mensagem";
+        // Limpa a mensagem anterior antes de uma nova tentativa
         mensagem.textContent = "";
+        mensagem.className = "mensagem"; // Reseta as classes
 
         if (!emailOuNome || !senha) {
             mensagem.textContent = "Preencha todos os campos.";
@@ -44,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 let usuarioLogado;
+                
                 if (tipo === "aluno") {
                     usuarioLogado = {
                         tipo: "aluno",
@@ -64,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (usuarioLogado) {
                     localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
                     
+                    // **CORREÇÃO:** Exibe a mensagem de sucesso
                     mensagem.textContent = data.message;
                     mensagem.classList.add("sucesso");
                     
@@ -71,17 +74,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.location.href = "Inicio.html";
                     }, 1000);
                 } else {
+                    // **CORREÇÃO:** Exibe a mensagem de erro
                     mensagem.textContent = "Erro ao processar dados de usuário.";
                     mensagem.classList.add("erro");
                 }
-
             } else {
+                // **CORREÇÃO:** Exibe a mensagem de erro
                 mensagem.textContent = data.message || "Erro no login. Verifique suas credenciais.";
                 mensagem.classList.add("erro");
             }
 
         } catch (error) {
             console.error("Erro na requisição de login:", error);
+            // **CORREÇÃO:** Exibe a mensagem de erro
             mensagem.textContent = "Não foi possível conectar ao servidor. Tente novamente.";
             mensagem.classList.add("erro");
         }

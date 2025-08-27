@@ -6,11 +6,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutBtn = document.querySelector('.logout');
     
     // Elementos do modal de gerenciamento (se você os tiver no seu HTML)
-    const gerenciamentoModal = document.getElementById('gerenciamentoModal');
     const closeBtn = document.querySelector('.close-btn');
     const alunoNomeModal = document.getElementById('alunoNomeModal');
     const novaDataVencimentoInput = document.getElementById('novaDataVencimento');
     const btnSalvarData = document.getElementById('btnSalvarData');
+    const gerenciamentoModal = document.getElementById('gerenciamentoModal');
+
+    // **NOVO**: Garante que o modal comece escondido
+    if (gerenciamentoModal) {
+        gerenciamentoModal.classList.add('escondido');
+    }
+
+    // ... sua função carregarPerfil()
+
+    // Onde você abre o modal (por exemplo, no evento de clique do botão "Gerenciar Mensalidade")
+    listaAlunosUl.addEventListener('click', (e) => {
+        if (e.target.classList.contains('btn-gerenciar-mensalidade')) {
+            // ... seu código para pegar o ID e o nome do aluno ...
+
+            if (gerenciamentoModal) {
+                // **CORREÇÃO**: Remove a classe para mostrar o modal
+                gerenciamentoModal.classList.remove('escondido');
+            }
+        }
+    });
+
+    // Onde você fecha o modal (por exemplo, no evento de clique do "x" ou fora do modal)
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            if (gerenciamentoModal) {
+                // **CORREÇÃO**: Adiciona a classe para fechar o modal
+                gerenciamentoModal.classList.add('escondido');
+            }
+        });
+    }
+
+    if (gerenciamentoModal) {
+        window.addEventListener('click', (e) => {
+            if (e.target === gerenciamentoModal) {
+                if (gerenciamentoModal) {
+                    // **CORREÇÃO**: Adiciona a classe para fechar o modal
+                    gerenciamentoModal.classList.add('escondido');
+                }
+            }
+        });
+    }
+
+    
+
+    // Elemento para o dropdown de notificações
+    const tipoNotificacaoSelect = document.getElementById('tipoNotificacao');
 
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
 
@@ -20,129 +65,91 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const academiaId = usuarioLogado.id;
+async function carregarPerfil() {
+    try {
+        console.log("Tentando carregar perfil para o ID da academia:", academiaId);
 
-    async function carregarPerfil() {
-        try {
-            // Requisição para buscar os dados da academia
-            const responseAcademia = await fetch(`http://localhost:3000/perfil/academia/${academiaId}`);
-            if (!responseAcademia.ok) {
-                // Se a requisição falhar, exibe o status e o texto do erro no console
-                console.error('Erro ao buscar dados da academia. Status:', responseAcademia.status, 'Texto do erro:', await responseAcademia.text());
-                throw new Error('Erro ao buscar dados da academia.');
-            }
-            const dadosAcademia = await responseAcademia.json();
+        // Requisição para buscar os dados da academia
+        const responseAcademia = await fetch(`http://localhost:3000/perfil/academia/${academiaId}`);
+        
+        // **NOVO**: Verifica a resposta antes de tentar ler o JSON
+        if (!responseAcademia.ok) {
+            console.error('Erro na requisição. Status:', responseAcademia.status, 'Texto do erro:', await responseAcademia.text());
+            detalhesAcademiaDiv.innerHTML = '<p class="mensagem-erro">Não foi possível carregar os dados da academia.</p>';
+            return;
+        }
 
+        const dadosAcademia = await responseAcademia.json();
+        console.log("Dados da academia recebidos:", dadosAcademia); // NOVO: Loga os dados recebidos
+
+        // Exibe os dados da academia
+        if (detalhesAcademiaDiv) {
             detalhesAcademiaDiv.innerHTML = `
-                <p><strong>Nome:</strong> ${dadosAcademia.nome}</p>
+                <p><strong>Nome:</strong> ${dadosAcademia.nome || 'Não informado'}</p>
                 <p><strong>Email:</strong> ${dadosAcademia.email || 'Não informado'}</p>
+                <p><strong>Cidade:</strong> ${dadosAcademia.cidade || 'Não informado'}</p>
+                <p><strong>Endereço:</strong> ${dadosAcademia.rua || 'Não informada'}, ${dadosAcademia.numero || 'S/N'}, ${dadosAcademia.bairro || 'Não informado'}</p>
                 <p><strong>Telefone:</strong> ${dadosAcademia.telefone || 'Não informado'}</p>
+                <p><strong>Horário de Atendimento:</strong> ${dadosAcademia.horario_atendimento || 'Não informado'}</p>
             `;
+        }
+        console.log("Perfil da academia carregado com sucesso.");
 
-            // Requisição para buscar a lista de alunos
-            const responseAlunos = await fetch(`http://localhost:3000/perfil/academia/alunos/${academiaId}`);
-            if (!responseAlunos.ok) {
-                 // Se a requisição falhar, exibe o status e o texto do erro no console
-                console.error('Erro ao buscar a lista de alunos. Status:', responseAlunos.status, 'Texto do erro:', await responseAlunos.text());
-                throw new Error('Erro ao buscar a lista de alunos.');
-            }
-            const alunos = await responseAlunos.json();
+        // Requisição para buscar a lista de alunos
+        const responseAlunos = await fetch(`http://localhost:3000/perfil/academia/alunos/${academiaId}`);
+        if (!responseAlunos.ok) {
+            console.error('Erro ao buscar lista de alunos. Status:', responseAlunos.status, 'Texto do erro:', await responseAlunos.text());
+            listaAlunosUl.innerHTML = '<p class="mensagem-erro">Não foi possível carregar os alunos.</p>';
+            return;
+        }
+        const alunos = await responseAlunos.json();
+        console.log("Dados de alunos recebidos:", alunos);
 
-            listaAlunosUl.innerHTML = '';
+        // Exibe a lista de alunos na UL
+        if (listaAlunosUl) {
+            listaAlunosUl.innerHTML = ''; 
             if (alunos.length > 0) {
                 alunos.forEach(aluno => {
-                    const alunoItem = document.createElement('li');
-                    alunoItem.className = 'aluno-item';
-                    alunoItem.innerHTML = `
-                        <strong>${aluno.nome} ${aluno.sobrenome}</strong>
-                        <span>Email: ${aluno.email}</span>
-                        <span>Vencimento: ${aluno.data_vencimento ? new Date(aluno.data_vencimento).toLocaleDateString('pt-BR') : 'Não definido'}</span>
-                        <button class="gerenciar-btn" data-aluno-id="${aluno.id}" data-aluno-nome="${aluno.nome}">Gerenciar</button>
+                    const li = document.createElement('li');
+                    li.className = 'aluno-item';
+                    li.innerHTML = `
+                        <div>
+                            <p><strong>Nome:</strong> ${aluno.nome} ${aluno.sobrenome}</p>
+                            <p><strong>Email:</strong> ${aluno.email}</p>
+                        </div>
+                        <button class="btn-gerenciar-mensalidade" data-aluno-id="${aluno.id}" data-aluno-nome="${aluno.nome} ${aluno.sobrenome}">Gerenciar Mensalidade</button>
                     `;
-                    listaAlunosUl.appendChild(alunoItem);
+                    listaAlunosUl.appendChild(li);
                 });
-
-                document.querySelectorAll('.gerenciar-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const alunoId = e.target.dataset.alunoId;
-                        const alunoNome = e.target.dataset.alunoNome;
-                        alunoNomeModal.textContent = alunoNome;
-                        gerenciamentoModal.style.display = 'block';
-                        btnSalvarData.dataset.alunoId = alunoId;
-                    });
-                });
-
             } else {
-                listaAlunosUl.innerHTML = '<li class="mensagem">Nenhum aluno cadastrado.</li>';
+                listaAlunosUl.innerHTML = '<p class="mensagem-vazia">Nenhum aluno cadastrado ainda.</p>';
             }
+        }
+        console.log("Lista de alunos carregada com sucesso.");
 
-        } catch (error) {
-            console.error('Erro ao carregar perfil:', error);
-            detalhesAcademiaDiv.innerHTML = '<p class="mensagem erro">Não foi possível carregar o perfil da academia.</p>';
+        // Limpa e popula o dropdown de notificações
+        const tipoNotificacaoSelect = document.getElementById('tipoNotificacao');
+        if (tipoNotificacaoSelect) {
+            while (tipoNotificacaoSelect.options.length > 1) {
+                tipoNotificacaoSelect.remove(1);
+            }
+            if (alunos.length > 0) {
+                alunos.forEach(aluno => {
+                    const option = document.createElement('option');
+                    option.value = aluno.id;
+                    option.textContent = `${aluno.nome} ${aluno.sobrenome}`;
+                    tipoNotificacaoSelect.appendChild(option);
+                });
+            }
+        }
+        console.log("Dropdown de notificações populado com sucesso.");
+
+    } catch (error) {
+        console.error("Erro ao carregar perfil:", error);
+        if (detalhesAcademiaDiv) {
+            detalhesAcademiaDiv.innerHTML = '<p class="mensagem-erro">Não foi possível carregar os dados. Verifique a conexão com o servidor.</p>';
         }
     }
-    
-    // Adiciona o listener para o botão de salvar data do modal
-    if (btnSalvarData) {
-        btnSalvarData.addEventListener('click', async () => {
-            const alunoId = btnSalvarData.dataset.alunoId;
-            const novaDataVencimento = novaDataVencimentoInput.value;
-
-            if (!novaDataVencimento) {
-                alert('Por favor, selecione uma nova data.');
-                return;
-            }
-
-            try {
-                const response = await fetch('http://localhost:3000/mensalidades/atualizar-vencimento', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        alunoId: alunoId,
-                        novaDataVencimento: novaDataVencimento
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Falha ao atualizar a data.');
-                }
-
-                alert('Data de vencimento atualizada com sucesso!');
-                gerenciamentoModal.style.display = 'none';
-                carregarPerfil();
-                
-            } catch (error) {
-                console.error('Erro ao salvar nova data:', error);
-                alert('Erro ao salvar a nova data de vencimento.');
-            }
-        });
-    }
-
-    // Adiciona o listener para o botão de fechar o modal
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            gerenciamentoModal.style.display = 'none';
-        });
-    }
-
-    // Adiciona o listener para fechar o modal clicando fora dele
-    if (gerenciamentoModal) {
-        window.addEventListener('click', (e) => {
-            if (e.target === gerenciamentoModal) {
-                gerenciamentoModal.style.display = 'none';
-            }
-        });
-    }
-    
-    // Adiciona a funcionalidade de Sair
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('usuarioLogado');
-            window.location.href = 'Inicio.html';
-        });
-    }
-    
-    carregarPerfil();
+}
+carregarPerfil();
 });

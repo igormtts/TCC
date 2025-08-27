@@ -18,7 +18,7 @@
     </header>
 
     <main class="perfil-container">
-        <div id="gerenciamentoModal" class="modal" style="display:none;">
+        <div id="gerenciamentoModal" class="modal">
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
                 <h3>Gerenciar Mensalidade</h3>
@@ -29,20 +29,24 @@
             </div>
         </div>
         <div id="enviarNotificacao" class="enviar-notificacao-card">
-    <h2>Enviar Notificação</h2>
-    <form id="notificacaoForm">
-        <input type="text" id="tituloNotificacao" placeholder="Título da Notificação" required>
-        <textarea id="conteudoNotificacao" placeholder="Conteúdo da notificação..." required></textarea>
-        <div class="opcoes-notificacao">
-            <label for="tipoNotificacao">Destinatário:</label>
-            <select id="tipoNotificacao">
-                <option value="geral">Todos os Alunos</option>
-                </select>
+            <h2>Enviar Notificação</h2>
+            <form id="notificacaoForm">
+                <input type="text" id="tituloNotificacao" placeholder="Título da Notificação" required>
+                <textarea id="conteudoNotificacao" placeholder="Conteúdo da notificação..." required></textarea>
+                <div class="opcoes-notificacao">
+                    <label for="tipoNotificacao">Destinatário:</label>
+                    <select id="tipoNotificacao">
+                        <option value="geral">Todos os Alunos</option>
+                    </select>
+                </div>
+                <button type="submit">Enviar</button>
+            </form>
+            <p id="mensagemNotificacao" class="mensagem"></p>
         </div>
-        <button type="submit">Enviar</button>
-    </form>
-    <p id="mensagemNotificacao" class="mensagem"></p>
-</div>
+        <div id="detalhesAcademia" class="info-card">
+            <h2>Dados da Academia</h2>
+            <p>Carregando dados do perfil...</p>
+        </div>
 
         <div id="alunosContainer" class="alunos-card">
             <h2>Meus Alunos</h2>
