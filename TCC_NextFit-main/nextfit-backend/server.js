@@ -1,5 +1,3 @@
-// server.js
-
 require('dotenv').config(); // Carrega as variáveis de ambiente do arquivo .env
 
 const express = require('express');
@@ -33,82 +31,6 @@ async function getConnection() {
         throw error; // Lança o erro para ser tratado pela rota
     }
 }
-// Função para criar as tabelas no banco de dados se elas não existirem
-async function createTables() {
-    let connection;
-    try {
-        connection = await getConnection();
-
-        // Tabela de Academias
-        await connection.execute(`
-            CREATE TABLE IF NOT EXISTS Academias (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                nome VARCHAR(255) NOT NULL UNIQUE,
-                email VARCHAR(255) NOT NULL UNIQUE,
-                cidade VARCHAR(255),
-                bairro VARCHAR(255),
-                rua VARCHAR(255),
-                cep VARCHAR(8),
-                numero VARCHAR(10),
-                telefone VARCHAR(11),
-                horario_atendimento VARCHAR(255),
-                senha VARCHAR(255) NOT NULL
-            )
-        `);
-        console.log("Tabela 'Academias' verificada/criada com sucesso.");
-
-        // Tabela de Alunos
-        await connection.execute(`
-            CREATE TABLE IF NOT EXISTS Alunos (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                nome VARCHAR(255) NOT NULL,
-                sobrenome VARCHAR(255) NOT NULL,
-                email VARCHAR(255) NOT NULL UNIQUE,
-                senha VARCHAR(255) NOT NULL,
-                academia_id INT,
-                FOREIGN KEY (academia_id) REFERENCES Academias(id)
-            )
-        `);
-        console.log("Tabela 'Alunos' verificada/criada com sucesso.");
-
-        // Tabela de Mensalidades
-        await connection.execute(`
-            CREATE TABLE IF NOT EXISTS Mensalidades (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                aluno_id INT NOT NULL,
-                data_vencimento DATE NOT NULL,
-                status VARCHAR(50) DEFAULT 'pendente',
-                FOREIGN KEY (aluno_id) REFERENCES Alunos(id)
-            )
-        `);
-        console.log("Tabela 'Mensalidades' verificada/criada com sucesso.");
-
-        // Tabela de Notificações
-        await connection.execute(`
-            CREATE TABLE IF NOT EXISTS Notificacoes (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                aluno_id INT,
-                titulo VARCHAR(255) NOT NULL,
-                conteudo TEXT NOT NULL,
-                tipo VARCHAR(50) NOT NULL,
-                data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (aluno_id) REFERENCES Alunos(id)
-            )
-        `);
-        console.log("Tabela 'Notificacoes' verificada/criada com sucesso.");
-    } catch (error) {
-        console.error("Erro ao criar tabelas no banco de dados:", error);
-    } finally {
-        if (connection) connection.end();
-    }
-}
-
-// Chame a função de criação de tabelas antes de iniciar o servidor
-createTables().then(() => {
-    app.listen(port, () => {
-        console.log(`Servidor rodando em http://localhost:${port}`);
-    });
-});
 
 // Rota de cadastro de academia
 app.post('/cadastro/academia', async (req, res) => {

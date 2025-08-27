@@ -110,27 +110,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await response.json();
 
+            // ...código anterior...
+
             if (response.ok) {
-                // **CORREÇÃO:** Exibe a mensagem de sucesso diretamente no elemento 'mensagem'
                 mensagem.innerText = data.message;
                 mensagem.classList.remove("erro");
                 mensagem.classList.add("sucesso");
-                academiaForm.reset();
+
                 // Limpe o formulário para evitar que a próxima tentativa use dados antigos
                 academiaForm.reset();
 
+                // Adiciona um pequeno atraso para que o usuário possa ver a mensagem de sucesso
+                setTimeout(() => {
+                    window.location.href = "Login.html";
+                }, 1500); // Redireciona após 1.5 segundos
+
             } else {
-                // **CORREÇÃO:** Exibe a mensagem de erro diretamente no elemento 'mensagem'
+                // Código para tratar erros (já existente)
                 mensagem.innerText = data.message || "Erro ao cadastrar academia.";
                 mensagem.classList.remove("sucesso");
                 mensagem.classList.add("erro");
             }
+
         } catch (error) {
             console.error('Erro de rede ou servidor:', error);
-            // **CORREÇÃO:** Exibe a mensagem de erro diretamente no elemento 'mensagem'
             mensagem.innerText = "Erro ao conectar com o servidor. Tente novamente mais tarde.";
             mensagem.classList.remove("sucesso");
             mensagem.classList.add("erro");
         }
-        });
     });
+});
