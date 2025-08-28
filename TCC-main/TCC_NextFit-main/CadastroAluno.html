@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Aluno - NextFit</title>
+  <link rel="stylesheet" href="css/CadastroAluno.css" />
+</head>
+
+<body>
+  <div id="popup" class="popup-container">
+    <div class="popup-content">
+      <span class="close-popup">&times;</span>
+      <p id="popup-message"></p>
+    </div>
+  </div>
+  <main id="form_container">
+    <div id="form_header">
+      <h1>NextFit</h1>
+      <h2>Cadastro de Aluno</h2>
+    </div>
+
+    <form id="alunoForm">
+      <a href="Inicio.html" class="btn-voltar">← Inicio</a>
+
+      <div id="campoAcademia">
+        <label for="academia">Escolha sua academia:</label>
+        <select id="academia"></select>
+      </div>
+
+      <input type="text" id="nomeAluno" name="nomeAluno" placeholder="Nome" required />
+      <input type="text" id="sobrenomeAluno" name="sobrenomeAluno" placeholder="Sobrenome" required />
+      <input type="email" id="emailAluno" name="emailAluno" placeholder="Email" required />
+      <input type="password" id="senhaAluno" name="senhaAluno" placeholder="Senha" required />
+      <input type="password" id="confirmaSenhaAluno" name="confirmaSenhaAluno" placeholder="Confirmar Senha" required />
+
+      <div id="mensagem" class="mensagem"></div>
+
+      <button type="submit">Cadastrar Aluno</button>
+    </form>
+
+    <p class="switch-link">
+      Não é aluno? <a href="CadastroAcademia.html">Cadastrar Academia</a>
+    </p>
+  </main>
+  <script src="js/feedback.js"></script>
+  <script src="js/CadastroAluno.js"></script>
+</body>
+
+</html>

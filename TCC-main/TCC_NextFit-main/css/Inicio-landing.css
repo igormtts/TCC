@@ -1,0 +1,201 @@
+/* css/inicio-landing.css */
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a; /* Fundo principal da landing page */
+    color: #f0f0f0;
+    line-height: 1.6;
+}
+
+/* Estilos para links */
+a {
+    color: #ff0000; /* Links em vermelho */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #cc0000; /* Tom mais escuro de vermelho no hover */
+    text-decoration: underline;
+}
+
+/* Estilos para títulos gerais */
+h1, h2, h3, h4, h5, h6 {
+    color: #ff0000; /* Títulos em vermelho para destaque */
+    margin-bottom: 15px;
+}
+
+/* Estilos para o Header */
+.header {
+    background-color: #1a1a1a; /* Fundo preto */
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ff0000; /* Linha vermelha na parte inferior */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+    color: #ff0000; /* Cor vermelha para o logo */
+    font-size: 2.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.nav .nav-btn {
+    color: #f0f0f0; /* Cor do texto dos botões de navegação */
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 10px 15px;
+    margin-left: 20px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.nav .nav-btn:hover {
+    color: #ff0000; /* Vermelho no hover */
+    background-color: #333; /* Fundo escuro no hover */
+}
+
+.nav .login-btn {
+    background-color: #ff0000; /* Fundo vermelho para o botão de Login */
+    color: white;
+    border: 1px solid #ff0000;
+}
+
+.nav .login-btn:hover {
+    background-color: #cc0000; /* Tom mais escuro de vermelho no hover */
+    border-color: #cc0000;
+    color: white;
+}
+
+/* Estilos para a Seção Hero (Banner Principal) */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99f2b17?fit=crop&w=1400&q=80') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.hero-text {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-text h2 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #ff0000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-text p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #f0f0f0;
+}
+
+/* Estilos para a Seção de Dicas */
+.tips {
+    background-color: #222;
+    padding: 50px 20px;
+    text-align: center;
+    color: #f0f0f0;
+}
+
+.tips h3 {
+    font-size: 2em;
+    color: #ff0000;
+    margin-bottom: 30px;
+}
+
+.tips ul {
+    list-style: none;
+    padding: 0;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tips li {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    flex: 1;
+    min-width: 250px;
+    text-align: left;
+    border: 1px solid #444;
+}
+
+/* Estilos para o Footer */
+.footer {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #ff0000;
+    font-size: 0.9em;
+}
+
+.footer p {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer li {
+    color: #f0f0f0;
+    list-style: none;
+}
+
+/* Responsividade Básica (ajustes para telas menores) */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .nav {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav .nav-btn {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .hero-text h2 {
+        font-size: 2.2em;
+    }
+
+    .hero-text p {
+        font-size: 1em;
+    }
+
+    .tips ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - NextFit</title>
+  <link rel="stylesheet" href="css/Login.css" />
+</head>
+<body>
+  <div id="popup" class="popup-container">
+    <div class="popup-content">
+        <span class="close-popup">&times;</span>
+        <p id="popup-message"></p>
+    </div>
+</div>
+  <div class="container">
+    <h1>Login - NextFit</h1>
+
+    <select id="tipoLogin">
+      <option value="aluno">Aluno</option>
+      <option value="academia">Academia</option>
+    </select>
+
+    <form id="loginForm">
+      <input type="text" id="emailOuNome" placeholder="Email (aluno) ou Nome (academia)" required />
+      <input type="password" id="senhaLogin" placeholder="Senha" required />
+      <button type="submit">Entrar</button>
+    </form>
+
+    <p id="mensagem" class="mensagem"></p>
+    <a href="CadastroAcademia.html" class="voltar-link">Não tem conta? Cadastre-se</a>
+  </div>
+  <script src="js/feedback.js"></script>
+  <script src="js/Login.js"></script>
+</body>
+</html>

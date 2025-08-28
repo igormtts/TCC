@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil da Academia - NextFit</title>
+    <link rel="stylesheet" href="css/perfilAcademia.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="logo">NextFit</h1>
+        <nav class="nav">
+            <a href="Inicio.html" class="nav-btn">Início</a>
+            <a href="Login.html" class="nav-btn logout">Sair</a>
+        </nav>
+    </header>
+
+    <main class="perfil-container">
+        <section class="profile-header">
+            <h2 id="profileName" class="profile-name">Nome da Academia</h2>
+            <button id="btnEditarPerfil" class="btn-editar">Editar Perfil</button>
+        </section>
+
+        <div id="dados-perfil" class="info-card">
+            <h3>Dados Cadastrais</h3>
+            <div id="detalhesAcademia">
+                <p><strong>Email:</strong> <span id="academiaEmail"></span></p>
+                <p><strong>Telefone:</strong> <span id="academiaTelefone"></span></p>
+            </div>
+        </div>
+
+        <form id="form-editar-perfil" class="form-editar" style="display:none;">
+            <h3>Alterar Dados</h3>
+            <input type="text" id="editNomeAcademia" placeholder="Novo Nome" required>
+            <input type="email" id="editEmailAcademia" placeholder="Novo Email" required>
+            <input type="tel" id="editTelefoneAcademia" placeholder="Novo Telefone (DDD + número)" required>
+            <button type="submit" class="btn-salvar">Salvar Alterações</button>
+            <button type="button" class="btn-cancelar">Cancelar</button>
+        </form>
+
+        <div id="alunosContainer" class="alunos-card">
+            <h2>Meus Alunos</h2>
+            <ul id="listaAlunos">
+            </ul>
+        </div>
+        
+        <section class="secao-notificacoes">
+            <h2>Enviar Notificação</h2>
+            <form id="formNotificacao">
+                <div class="form-group">
+                    <label for="tituloNotificacao">Título:</label>
+                    <input type="text" id="tituloNotificacao" required>
+                </div>
+                <div class="form-group">
+                    <label for="tipoNotificacao">Destinatário:</label>
+                    <select id="tipoNotificacao" required>
+                        <option value="geral">Todos os Alunos</option>
+                        </select>
+                </div>
+                <div class="form-group">
+                    <label for="conteudoNotificacao">Mensagem:</label>
+                    <textarea id="conteudoNotificacao" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-enviar-notificacao">Enviar</button>
+            </form>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 NextFit. Todos os direitos reservados.</p>
+    </footer>
+
+    <div id="gerenciarMensalidadeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modalAlunoNome">Gerenciar Mensalidade</h3>
+            <p>Nova data de vencimento:</p>
+            <input type="text" id="novaDataInput" placeholder="DD/MM/AAAA" class="modal-input">
+            <button id="salvarMensalidadeBtn" class="modal-btn">Salvar</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+
+    <script src="js/perfilAcademia.js"></script>
+</body>
+
+</html>
